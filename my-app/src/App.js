@@ -9,21 +9,21 @@ class App extends React.Component {
     userinput: [],
   };
 
-  
-    componentDidMount() {
-      Promise.all([
-        axios.get(`https://api.github.com/users/alextcedwards`),
-        axios.get("https://api.github.com/users/alextcedwards/followers")
-      ]).then(([res1, res2]) => {
+  componentDidMount() {
+    Promise.all([
+      axios.get(`https://api.github.com/users/alextcedwards`),
+      axios.get("https://api.github.com/users/alextcedwards/followers"),
+    ])
+      .then(([res1, res2]) => {
         this.setState({
           user: res1.data,
-          followers: res2.data
+          followers: res2.data,
         });
       })
       .catch(([err1, err2]) => {
         console.log(err1, err2);
       });
-    };
+  }
   handleChange = (event) => {
     this.setState({
       userinput: event.target.value,
@@ -56,7 +56,7 @@ class App extends React.Component {
           <button>Search Users</button>
         </form>
         <div className="card">
-          <img src={this.state.user.avatar_url} />
+          <img src={this.state.user.avatar_url} alt="" />
           <div className="cardinfo">
             <span>Name:</span> {this.state.user.name} <br />
             <span>UserName:</span> {this.state.user.login}
@@ -69,9 +69,10 @@ class App extends React.Component {
         </div>
 
         {this.state.followers.map((item) => {
+          console.log(item);
           return (
             <div className="card">
-              <img src={item.avatar_url} />
+              <img src={item.avatar_url} alt="" />
               <div className="cardinfo">
                 <span>Name:</span> {item.name} <br />
                 <span>UserName:</span>
